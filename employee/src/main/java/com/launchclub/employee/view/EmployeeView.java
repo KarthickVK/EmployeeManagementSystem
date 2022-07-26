@@ -56,6 +56,7 @@ public class EmployeeView {
 			return choice;
 		} else {
 			LOGGER.warn("Please Enter Valid Choice:");
+			System.out.println("hello");
 			return EmployeeView.getMenuChoice();
 		}
 	}
@@ -288,7 +289,7 @@ public class EmployeeView {
 		try {
 			EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
 			LOGGER.info("Data Deleted Successfully!!!");
-			System.out.println("hii");
+			System.out.println("hii drtfgyhujikjihgfdsaWQWESDRFTGYHUJK");
 		} catch (CustomException exception) {
 			LOGGER.error(exception);
 			EmployeeView.deleteEmployee();
