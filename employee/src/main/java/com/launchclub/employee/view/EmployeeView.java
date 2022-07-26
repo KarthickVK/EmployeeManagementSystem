@@ -289,7 +289,7 @@ public class EmployeeView {
 		try {
 			EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
 			LOGGER.info("Data Deleted Successfully!!!");
-			System.out.println("hii drtfgyhujikjihgfdsaWQWESDRFTGYHUJKwertyu");
+			System.out.println("hii drtfgyhujikjihgfdsaWQWESDRFTGYHUJKkjhgfd");
 		} catch (CustomException exception) {
 			LOGGER.error(exception);
 			EmployeeView.deleteEmployee();
