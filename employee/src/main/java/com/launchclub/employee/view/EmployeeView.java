@@ -15,289 +15,304 @@ import java.sql.Date;
 /**
  * Represents on EmployeeView. this class is used to collect all the user
  * inputs.
- * 
+ *
  * @author KarthickV
  */
 public class EmployeeView {
 
     private static final EmployeeController EMPLOYEE_CONTROLLER = EmployeeController.getInstance();
-	private static final Logger LOGGER = Logger.getLogger(EmployeeView.class);
+    private static final Logger LOGGER = Logger.getLogger(EmployeeView.class);
 
-	/**
-	 * Select menu.
-	 */
-	public static void showMenu() {
-		String userChoice;
-		
-		do {
-			System.out.println("EmployeeManagement: \na.CREATE \nb.UPDATE \nc.DELETE \nd.SHOW");
-			final String choice = EmployeeView.getMenuChoice();
+    /**
+     * Select menu.
+     */
+    public static void showMenu() {
+        String userChoice;
 
-			if ("a".equalsIgnoreCase(choice)) {
-				EmployeeView.createEmployee();
-			} else if ("b".equalsIgnoreCase(choice)) {
-				EmployeeView.updateEmployee();
-			} else if ("c".equalsIgnoreCase(choice)) {
-				EmployeeView.deleteEmployee();
-			} else if ("d".equalsIgnoreCase(choice)) {
-				EmployeeView.getAllEmployees();
-			}
-			userChoice = UserInputs.getInputs("Do you need to Continue?(Yes,No)");
-		} while ("yes".equalsIgnoreCase(userChoice));
-	}
+        do {
+            LOGGER.info("EmployeeManagement: \na.CREATE \nb.UPDATE \nc.DELETE \nd.SHOW \ne.SELECT");
+            final String choice = getMenuChoice();
 
-	/**
-	 * Gets menuChoice.
-	 */
-	private static String getMenuChoice() {
-		final String choice = UserInputs.getInputs("Enter the choice(a-d):");
+            if ("a".equalsIgnoreCase(choice)) {
+                EmployeeView.createEmployee();
+            } else if ("b".equalsIgnoreCase(choice)) {
+                EmployeeView.updateEmployee();
+            } else if ("c".equalsIgnoreCase(choice)) {
+                EmployeeView.deleteEmployee();
+            } else if ("d".equalsIgnoreCase(choice)) {
+                EmployeeView.getAllEmployees();
+            } else if ("e".equalsIgnoreCase(choice)) {
+                EmployeeView.selectEmployee();
+            }
 
-		if (EmployeeValidation.validateChoice(choice)) {
-			return choice;
-		} else {
-			LOGGER.warn("Please Enter Valid Choice:");
-			return EmployeeView.getMenuChoice();
-		}
-	}
+            userChoice = UserInputs.getInputs("Do you need to Continue?(Yes,No)");
+        } while ("yes".equalsIgnoreCase(userChoice));
+    }
 
-	/**
-	 * Gets userChoice.
-	 */
+    /**
+     * Gets menuChoice.
+     */
+    private static String getMenuChoice() {
+        final String choice = UserInputs.getInputs("Enter the choice(a-e):");
 
-	private static String getUserChoice() {
-		final String choice = UserInputs.getInputs("Enter the choice(yes or no):");
+        if (EmployeeValidation.validateChoice(choice)) {
+            return choice;
+        } else {
+            LOGGER.warn("Please Enter Valid Choice:");
+            return getMenuChoice();
+        }
+    }
 
-		if ("no".equalsIgnoreCase(choice)) {
-			System.out.println("Thank you!!!!");
-			System.exit(0);
-		}
+    /**
+     * Gets userChoice.
+     */
+    private static String getUserChoice() {
+        final String choice = UserInputs.getInputs("Enter the choice(yes or no):");
 
-		if (EmployeeValidation.validateChoice(choice)) {
-			return choice;
-		} else {
-			LOGGER.warn("Please Enter Valid Choice:");
-			return EmployeeView.getUserChoice();
-		}
-	}
+        if ("no".equalsIgnoreCase(choice)) {
+            System.out.println("Thank you!!!!");
+            System.exit(0);
+        }
 
-	/**
-	 * Gets employeeId to the user.
-	 */
-	private static String getEmployeeId() {
-		final String employeeId = UserInputs.getInputs("Enter the employeeId: !!! Do you want to go Mainmenu press goMenu");
+        if (EmployeeValidation.validateChoice(choice)) {
+            return choice;
+        } else {
+            LOGGER.warn("Please Enter Valid Choice:");
+            return EmployeeView.getUserChoice();
+        }
+    }
 
-		if ("goMenu".equalsIgnoreCase(employeeId)) {
-			EmployeeView.showMenu();
-		}
+    /**
+     * Gets employeeId to the user.
+     */
+    private static String getEmployeeId() {
+        final String employeeId = UserInputs.getInputs("Enter the employeeId: !!! Do you want to go Mainmenu press goMenu");
 
-		if (Validation.validateId(employeeId)) {
-			return employeeId;
-		} else {
-			LOGGER.warn("Please Enter Valid Id");
-			return EmployeeView.getEmployeeId();
-		}
-	}
+        if ("goMenu".equalsIgnoreCase(employeeId)) {
+            EmployeeView.showMenu();
+        }
 
-	/**
-	 * Gets EmployeeName to the user
-	 */
-	private static String getEmployeeName() {
-		final String employeeName = UserInputs.getInputs("Enter the employeeName: !!! Do you want to go Mainmenu press goMenu");
+        if (Validation.validateId(employeeId)) {
+            return employeeId;
+        } else {
+            LOGGER.warn("Please Enter Valid Id");
+            return EmployeeView.getEmployeeId();
+        }
+    }
 
-		if ("goMenu".equalsIgnoreCase(employeeName)) {
-			EmployeeView.showMenu();
-		}
+    /**
+     * Gets EmployeeName to the user
+     */
+    private static String getEmployeeName() {
+        final String employeeName = UserInputs.getInputs("Enter the employeeName: !!! Do you want to go Mainmenu press goMenu");
 
-		if (Validation.validateName(employeeName)) {
-			return employeeName;
-		} else {
-			LOGGER.warn("Please Enter Valid EmployeeName");
-			return EmployeeView.getEmployeeName();
-		}
-	}
+        if ("goMenu".equalsIgnoreCase(employeeName)) {
+            EmployeeView.showMenu();
+        }
 
-	/**
-	 * Gets EmployeePhoneNo to the user.
-	 */
-	private static String getEmployeePhoneNo() {
-		final String employeePhoneNo = UserInputs.getInputs("Enter the employeePhoneNo: !!! Do you want to go Mainmenu press goMenu");
+        if (Validation.validateName(employeeName)) {
+            return employeeName;
+        } else {
+            LOGGER.warn("Please Enter Valid EmployeeName");
+            return EmployeeView.getEmployeeName();
+        }
+    }
 
-		if ("goMenu".equalsIgnoreCase(employeePhoneNo)) {
-			EmployeeView.showMenu();
-		}
+    /**
+     * Gets EmployeePhoneNo to the user.
+     */
+    private static String getEmployeePhoneNo() {
+        final String employeePhoneNo = UserInputs.getInputs("Enter the employeePhoneNo: !!! Do you want to go Mainmenu press goMenu");
 
-		if (Validation.validatePhoneNo(employeePhoneNo)) {
-			return employeePhoneNo;
-		} else {
-			LOGGER.warn("Please Enter Valid PhoneNo");
-			return EmployeeView.getEmployeePhoneNo();
-		}
-	}
+        if ("goMenu".equalsIgnoreCase(employeePhoneNo)) {
+            EmployeeView.showMenu();
+        }
 
-	/**
-	 * Gets EmployeeSalary to the user.
-	 */
-	private static String getEmployeeSalary() {
-		final String employeeSalary = UserInputs.getInputs("Enter the employeeSalary: !!! Do you want to go Mainmenu press goMenu");
+        if (Validation.validatePhoneNo(employeePhoneNo)) {
+            return employeePhoneNo;
+        } else {
+            LOGGER.warn("Please Enter Valid PhoneNo");
+            return EmployeeView.getEmployeePhoneNo();
+        }
+    }
 
-		if ("goMenu".equalsIgnoreCase(employeeSalary)) {
-			EmployeeView.showMenu();
-		}
-		
-		if (Validation.validateSalary(employeeSalary)) {
-			return employeeSalary;
-		} else {
-			LOGGER.warn("Please Enter Valid EmployeeSalary");
-			return EmployeeView.getEmployeeSalary();
-		}
-	}
+    /**
+     * Gets EmployeeSalary to the user.
+     */
+    private static String getEmployeeSalary() {
+        final String employeeSalary = UserInputs.getInputs("Enter the employeeSalary: !!! Do you want to go Mainmenu press goMenu");
 
-	/**
-	 * Gets EmployeeDateOfBirth to the user.
-	 */
-	private static Date getEmployeeDateOfBirth() {
-		final String employeeDateOfBirth = UserInputs.getInputs("Enter the employeeDateOfBirth(yyyy-MM-dd) !!! Do you want to go Mainmenu press goMenu");
+        if ("goMenu".equalsIgnoreCase(employeeSalary)) {
+            EmployeeView.showMenu();
+        }
 
-		if ("goMenu".equalsIgnoreCase(employeeDateOfBirth)) {
-			EmployeeView.showMenu();
-		}
-		boolean isValidEmployeeDateOfBirth = false;
+        if (Validation.validateSalary(employeeSalary)) {
+            return employeeSalary;
+        } else {
+            LOGGER.warn("Please Enter Valid EmployeeSalary");
+            return EmployeeView.getEmployeeSalary();
+        }
+    }
 
-		try {
-			 isValidEmployeeDateOfBirth = Validation.validateDate(employeeDateOfBirth);
-		} catch (Exception exception) {
-			LOGGER.error(exception);
-		}
+    /**
+     * Gets EmployeeDateOfBirth to the user.
+     */
+    private static Date getEmployeeDateOfBirth() {
+        final String employeeDateOfBirth = UserInputs.getInputs("Enter the employeeDateOfBirth(yyyy-MM-dd) !!! Do you want to go Mainmenu press goMenu");
 
-		if (isValidEmployeeDateOfBirth) {
-			return Date.valueOf(employeeDateOfBirth);
-		} else {
-			return EmployeeView.getEmployeeDateOfBirth();
-		}
-	}
+        if ("goMenu".equalsIgnoreCase(employeeDateOfBirth)) {
+            EmployeeView.showMenu();
+        }
+        boolean isValidEmployeeDateOfBirth = false;
 
-	/**
-	 * Gets employeeDetails.
-	 */
-	private static void createEmployee() {
-		final String employeeId = EmployeeView.getEmployeeId();
+        try {
+            isValidEmployeeDateOfBirth = Validation.validateDate(employeeDateOfBirth);
+        } catch (Exception exception) {
+            LOGGER.error(exception);
+        }
 
-		if (EmployeeValidation.validateIdPresent(employeeId)) {
-			LOGGER.warn("EmpoyeeId Already present \n Please Enter Valid EmployeeId");
-			EmployeeView.createEmployee();
-			EmployeeView.showMenu();
-		}
+        if (isValidEmployeeDateOfBirth) {
+            return Date.valueOf(employeeDateOfBirth);
+        } else {
+            return EmployeeView.getEmployeeDateOfBirth();
+        }
+    }
 
-		final String employeeName = EmployeeView.getEmployeeName();
-		final String employeePhoneNo = EmployeeView.getEmployeePhoneNo();
-		final String salary = EmployeeView.getEmployeeSalary();
-		final Date employeeDateOfBirth = EmployeeView.getEmployeeDateOfBirth();
-		final Employee employee = new Employee(employeeId, employeeName, employeePhoneNo, salary, employeeDateOfBirth);
+    /**
+     * Gets employeeDetails.
+     */
+    private static void createEmployee() {
+        final String employeeId = EmployeeView.getEmployeeId();
 
-		try {
-			EMPLOYEE_CONTROLLER.createEmployee(employee);
-			LOGGER.info("Data Added Successfully!!!");
-		} catch (IdAlreadyFoundException exception) {
-			LOGGER.error(exception);
-			EmployeeView.createEmployee();
-		}
-	}
+        if (EmployeeValidation.validateIdPresent(employeeId)) {
+            LOGGER.warn("EmpoyeeId Already present \n Please Enter Valid EmployeeId");
+            EmployeeView.createEmployee();
+            EmployeeView.showMenu();
+        }
 
-	/**
-	 * Update EmployeeDetails.Then user choose the one properties to call the
-	 * related method.
-	 */
-	private static String getUpdateChoice() {
-		final String choice = UserInputs.getInputs("Enter the choice(yes or no or goMenu or Exit):");
+        final String employeeName = EmployeeView.getEmployeeName();
+        final String employeePhoneNo = EmployeeView.getEmployeePhoneNo();
+        final String salary = EmployeeView.getEmployeeSalary();
+        final Date employeeDateOfBirth = EmployeeView.getEmployeeDateOfBirth();
+        final Employee employee = new Employee(employeeId, employeeName, employeePhoneNo, salary, employeeDateOfBirth);
 
-		if ("goMenu".equalsIgnoreCase(choice)) {
-			EmployeeView.showMenu();
-		}
+        try {
+            EMPLOYEE_CONTROLLER.createEmployee(employee);
+            LOGGER.info("Data Added Successfully!!!");
+        } catch (IdAlreadyFoundException exception) {
+            LOGGER.error(exception);
+            EmployeeView.createEmployee();
+        }
+    }
 
-		if ("exit".equalsIgnoreCase(choice)) {
-			System.out.println("Thank you!!!!");
-		}
+    /**
+     * Update EmployeeDetails.Then user choose the one properties to call the
+     * related method.
+     */
+    private static String getUpdateChoice() {
+        final String choice = UserInputs.getInputs("Enter the choice(yes or no or goMenu or Exit):");
 
-		if (EmployeeValidation.validateChoice(choice)) {
-			return choice;
-		} else {
-			LOGGER.warn("Please Enter Valid Choice:");
-			return EmployeeView.getUpdateChoice();
-		}
-	}
+        if ("goMenu".equalsIgnoreCase(choice)) {
+            EmployeeView.showMenu();
+        }
 
-	/**
-	 * Update EmployeeDetails.
-	 */
-	private static void updateEmployee() {
-		String employeeName = null;
-		String employeePhoneNo = null;
-		String employeeSalary = null;
-		Date employeeDateOfBirth = null;
-		final String employeeId = EmployeeView.getEmployeeId();
+        if ("exit".equalsIgnoreCase(choice)) {
+            LOGGER.info("Thank you!!!!");
+        }
 
-		if (!EmployeeValidation.validateIdPresent(employeeId)) {
-			LOGGER.warn("Please Enter Valid EmployeeId");
-			EmployeeView.updateEmployee();
-			EmployeeView.showMenu();
-		}
-		final Employee employeeDetails = new Employee();
-		System.out.println("do you want to change EmployeeName?\t yes or no or goMenu or Exit");
+        if (EmployeeValidation.validateChoice(choice)) {
+            return choice;
+        } else {
+            LOGGER.warn("Please Enter Valid Choice:");
+            return EmployeeView.getUpdateChoice();
+        }
+    }
 
-		if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
-			employeeName = EmployeeView.getEmployeeName();
-		}
-		System.out.println("do you want to change EmployeePhoneNo?\t yes or no or goMenu or Exit");
+    /**
+     * Update EmployeeDetails.
+     */
+    private static void updateEmployee() {
+        String employeeName = null;
+        String employeePhoneNo = null;
+        String employeeSalary = null;
+        Date employeeDateOfBirth = null;
+        final String employeeId = EmployeeView.getEmployeeId();
 
-		if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
-			employeePhoneNo = EmployeeView.getEmployeePhoneNo();
-		}
-		System.out.println("do you want to change EmployeeSalary?\t yes or no or goMenu or Exit");
+        if (!EmployeeValidation.validateIdPresent(employeeId)) {
+            LOGGER.warn("Please Enter Valid EmployeeId");
+            EmployeeView.updateEmployee();
+            EmployeeView.showMenu();
+        }
+        final Employee employee = new Employee();
+        LOGGER.info("do you want to change EmployeeName?\t yes or no or goMenu or Exit");
 
-		if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
-			employeeSalary = EmployeeView.getEmployeeSalary();
-		}
-		System.out.println("do you want to change EmployeeDateOfBirth?\t yes or no or goMenu or Exit");
+        if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
+            employeeName = EmployeeView.getEmployeeName();
+        }
+        LOGGER.info("do you want to change EmployeePhoneNo?\t yes or no or goMenu or Exit");
 
-		if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
-			employeeDateOfBirth = EmployeeView.getEmployeeDateOfBirth();
-		}
+        if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
+            employeePhoneNo = EmployeeView.getEmployeePhoneNo();
+        }
+        LOGGER.info("do you want to change EmployeeSalary?\t yes or no or goMenu or Exit");
 
-		employeeDetails.setEmployeeId(employeeId);
-		employeeDetails.setEmployeeName(employeeName);
-		employeeDetails.setEmployeePhoneNo(employeePhoneNo);
-		employeeDetails.setEmployeeSalary(employeeSalary);
-		employeeDetails.setEmployeeDateOfBirth(employeeDateOfBirth);
+        if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
+            employeeSalary = EmployeeView.getEmployeeSalary();
+        }
+        LOGGER.info("do you want to change EmployeeDateOfBirth?\t yes or no or goMenu or Exit");
 
-		try {
-			if (EMPLOYEE_CONTROLLER.updateEmployee(employeeDetails)) {
-				LOGGER.info("Data Updated Successfully!!!");
-			}
-		} catch (CustomException exception) {
-			LOGGER.error(exception);
-			EmployeeView.updateEmployee();
-		}
-	}
+        if ("yes".equalsIgnoreCase(EmployeeView.getUpdateChoice())) {
+            employeeDateOfBirth = EmployeeView.getEmployeeDateOfBirth();
+        }
 
-	/**
-	 * Delete employeeDetails.
-	 */
-	private static void deleteEmployee() {
-		final String employeeId = EmployeeView.getEmployeeId();
+        employee.setEmployeeId(employeeId);
+        employee.setEmployeeName(employeeName);
+        employee.setEmployeePhoneNo(employeePhoneNo);
+        employee.setEmployeeSalary(employeeSalary);
+        employee.setEmployeeDateOfBirth(employeeDateOfBirth);
 
-		try {
-			EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
-			LOGGER.info("Data Deleted Successfully!!!");
-		} catch (CustomException exception) {
-			LOGGER.error(exception);
-			EmployeeView.deleteEmployee();
-		}
-	}
+        try {
+            if (EMPLOYEE_CONTROLLER.updateEmployee(employee)) {
+                LOGGER.info("Data Updated Successfully!!!");
+            }
+        } catch (CustomException exception) {
+            LOGGER.error(exception);
+            EmployeeView.updateEmployee();
+        }
+    }
 
-	/**
-	 * Show all the employeeDetails.
-	 */
-	private static void getAllEmployees() {
-		System.out.println(EMPLOYEE_CONTROLLER.showAllEmployees());
-	}
+    /**
+     * Delete employeeDetails.
+     */
+    private static void deleteEmployee() {
+        final String employeeId = EmployeeView.getEmployeeId();
+
+        try {
+            EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
+            LOGGER.info("Data Deleted Successfully!!!");
+            System.out.println("hello");
+        } catch (CustomException exception) {
+            LOGGER.error(exception);
+            EmployeeView.deleteEmployee();
+        }
+    }
+
+    /**
+     * Show all the employeeDetails.
+     */
+    private static void getAllEmployees() {
+        LOGGER.info(EMPLOYEE_CONTROLLER.showAllEmployees());
+    }
+
+    /**
+     * Select the particular employeeDetails.
+     */
+    private static void selectEmployee() {
+
+        try {
+            LOGGER.info(EMPLOYEE_CONTROLLER.selectEmployee(EmployeeView.getEmployeeId()));
+        } catch (CustomException exception) {
+            LOGGER.error(exception);
+        }
+    }
 }
