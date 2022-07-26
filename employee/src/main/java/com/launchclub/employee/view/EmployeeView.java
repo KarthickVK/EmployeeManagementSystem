@@ -23,28 +23,31 @@ public class EmployeeView {
     private static final EmployeeController EMPLOYEE_CONTROLLER = EmployeeController.getInstance();
 	private static final Logger LOGGER = Logger.getLogger(EmployeeView.class);
 
-	/**
-	 * Select menu.
-	 */
-	public static void showMenu() {
-		String userChoice;
-		
-		do {
-			System.out.println("EmployeeManagement: \na.CREATE \nb.UPDATE \nc.DELETE \nd.SHOW");
-			final String choice = EmployeeView.getMenuChoice();
+    /**
+     * Select menu.
+     */
+    public static void showMenu() {
+        String userChoice;
 
-			if ("a".equalsIgnoreCase(choice)) {
-				EmployeeView.createEmployee();
-			} else if ("b".equalsIgnoreCase(choice)) {
-				EmployeeView.updateEmployee();
-			} else if ("c".equalsIgnoreCase(choice)) {
-				EmployeeView.deleteEmployee();
-			} else if ("d".equalsIgnoreCase(choice)) {
-				EmployeeView.getAllEmployees();
-			}
-			userChoice = UserInputs.getInputs("Do you need to Continue?(Yes,No)");
-		} while ("yes".equalsIgnoreCase(userChoice));
-	}
+        do {
+            LOGGER.info("EmployeeManagement: \na.CREATE \nb.UPDATE \nc.DELETE \nd.SHOW \ne.SELECT");
+            final String choice = getMenuChoice();
+
+            if ("a".equalsIgnoreCase(choice)) {
+                EmployeeView.createEmployee();
+            } else if ("b".equalsIgnoreCase(choice)) {
+                EmployeeView.updateEmployee();
+            } else if ("c".equalsIgnoreCase(choice)) {
+                EmployeeView.deleteEmployee();
+            } else if ("d".equalsIgnoreCase(choice)) {
+                EmployeeView.getAllEmployees();
+            } else if ("e".equalsIgnoreCase(choice)) {
+                EmployeeView.selectEmployee();
+            }
+
+            userChoice = UserInputs.getInputs("Do you need to Continue?(Yes,No)");
+        } while ("yes".equalsIgnoreCase(userChoice));
+    }
 
 	/**
 	 * Gets menuChoice.
@@ -56,7 +59,6 @@ public class EmployeeView {
 			return choice;
 		} else {
 			LOGGER.warn("Please Enter Valid Choice:");
-			System.out.println("hello");
 			return EmployeeView.getMenuChoice();
 		}
 	}
@@ -289,7 +291,6 @@ public class EmployeeView {
 		try {
 			EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
 			LOGGER.info("Data Deleted Successfully!!!");
-			System.out.println("hii drtfgyhujikjihgfdsaWQWESDRFTGYHUJKkjhgfd");
 		} catch (CustomException exception) {
 			LOGGER.error(exception);
 			EmployeeView.deleteEmployee();
