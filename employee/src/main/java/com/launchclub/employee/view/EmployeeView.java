@@ -291,6 +291,7 @@ public class EmployeeView {
 		try {
 			EMPLOYEE_CONTROLLER.deleteEmployee(employeeId);
 			LOGGER.info("Data Deleted Successfully!!!");
+			System.out.println("hiii");
 		} catch (CustomException exception) {
 			LOGGER.error(exception);
 			EmployeeView.deleteEmployee();
